@@ -1,8 +1,14 @@
 
 import 'package:flutter/material.dart';
 
-class BodyContent extends StatelessWidget {
+class BodyContent extends StatefulWidget {
   const BodyContent({Key? key}) : super(key: key);
+
+  @override
+  State<BodyContent> createState() => _BodyContentState();
+}
+
+class _BodyContentState extends State<BodyContent> {
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +23,13 @@ class BodyContent extends StatelessWidget {
                       children: [
                         Container(),
                         Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                            height: 300,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            child: Container(
+                              height: 300,
                               child: SizedBox(),
-                          )
+                            )
                         ),
                       ],
                     )

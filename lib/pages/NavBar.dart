@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './BodyContent.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -16,11 +17,15 @@ class _NavBarState extends State<NavBar> {
       style: optionStyle,
     ),
     Text(
-      'Index 1: Business',
+      'Index 1: chart',
       style: optionStyle,
     ),
     Text(
-      'Index 2: School',
+      'Index 2: bell',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: option',
       style: optionStyle,
     ),
   ];
@@ -28,6 +33,7 @@ class _NavBarState extends State<NavBar> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
     });
   }
 
@@ -55,15 +61,15 @@ class _NavBarState extends State<NavBar> {
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.bar_chart, size: 35),
-              label: "asdf"
+              label: "chart"
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.notifications_none, size: 35),
-              label: "asdf"
+              label: "bell"
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings, size: 35),
-              label: "asdf"
+              label: "option",
           ),
         ],
         currentIndex: _selectedIndex,
