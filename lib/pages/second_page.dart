@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
 
-class BodyContent extends StatefulWidget {
-  const BodyContent({Key? key}) : super(key: key);
+class SecondPage extends StatefulWidget {
+  const SecondPage({Key? key}) : super(key: key);
 
   @override
-  State<BodyContent> createState() => _BodyContentState();
+  State<SecondPage> createState() => _SecondPageState();
 }
 
-class _BodyContentState extends State<BodyContent> {
+class _SecondPageState extends State<SecondPage> {
 
   @override
   Widget build(BuildContext context) {

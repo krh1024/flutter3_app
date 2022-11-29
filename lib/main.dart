@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
-import './pages/FirstPage.dart';
+import 'pages/first_page.dart';
+import 'pages/second_page.dart';
+import 'pages/third_page.dart';
+import 'pages/fourth_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,111 +16,87 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        canvasColor: Colors.grey[200],
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.black),
+          color: Colors.lightGreen,
+        ),
       ),
-      home: const MyHomePage(),
+      debugShowCheckedModeBanner: false,
+      home: mainPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
+class mainPage extends StatefulWidget {
+  const mainPage({Key? key}) : super(key: key);
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<mainPage> createState() => _mainPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final Color navigationBarColor = Colors.white;
-  int selectedIndex = 0;
-  late PageController pageController;
-  @override
-  void initState() {
-    super.initState();
-    pageController = PageController(initialPage: selectedIndex);
-  }
+class _mainPageState extends State<mainPage> {
+
+  int currentPage = 0;
+  List<Widget> pages = const [
+    FirstPage(),
+    SecondPage(),
+    ThirdPage(),
+    FourthPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
-    /// [AnnotatedRegion<SystemUiOverlayStyle>] only for android black navigation bar. 3 button navigation control (legacy)
-
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        systemNavigationBarColor: navigationBarColor,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.white38,
-        appBar: AppBar(
-          title: Text("마시다"),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          icon: const Icon(Icons.menu),
+          onPressed: () {},
         ),
-        body: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: pageController,
-          children: <Widget>[
-            FirstPage(),
-            Container(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.favorite_rounded,
-                size: 56,
-                color: Colors.red[400],
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.email_rounded,
-                size: 56,
-                color: Colors.green[400],
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.folder_rounded,
-                size: 56,
-                color: Colors.blue[400],
-              ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: WaterDropNavBar(
-          bottomPadding: 20,
-          iconSize: 25,
-          backgroundColor: navigationBarColor,
-          onItemSelected: (int index) {
-            setState(() {
-              selectedIndex = index;
-            });
-            pageController.animateToPage(selectedIndex,
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeOutQuad);
-          },
-          selectedIndex: selectedIndex,
-          barItems: <BarItem>[
-            BarItem(
-              filledIcon: Icons.bookmark_rounded,
-              outlinedIcon: Icons.bookmark_border_rounded,
-            ),
-            BarItem(
-                filledIcon: Icons.favorite_rounded,
-                outlinedIcon: Icons.favorite_border_rounded),
-            BarItem(
-              filledIcon: Icons.email_rounded,
-              outlinedIcon: Icons.email_outlined,
-            ),
-            BarItem(
-              filledIcon: Icons.folder_rounded,
-              outlinedIcon: Icons.folder_outlined,
-            ),
-          ],
+        centerTitle: true,
+        title: const Text(
+          "우리아이",
+          style: TextStyle(color: Color(0xff096609), fontWeight: FontWeight.w900),
         ),
       ),
+      body: pages[currentPage],
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: currentPage,
+        showElevation: true,
+        itemCornerRadius: 24,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        iconSize: 34,
+        containerHeight: 80,
+        animationDuration: Duration(milliseconds: 150),
+        curve: Curves.easeIn,
+        onItemSelected: (index) => setState(() => currentPage = index),
+        items: <BottomNavyBarItem>[
+          BottomNavyBarItem(
+            icon: Icon(Icons.home),
+            title: Text('홈'),
+            activeColor: Colors.red,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.restaurant),
+            title: Text('아이정보'),
+            activeColor: Colors.purpleAccent,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.schedule),
+            title: Text('식단표'),
+            activeColor: Colors.pink,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.settings),
+            title: Text('설정'),
+            activeColor: Colors.blue,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      )
     );
   }
 }
